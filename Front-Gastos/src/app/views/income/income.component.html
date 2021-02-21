@@ -51,8 +51,8 @@
         <div class="col-lg-2"></div>        
     </div>
     <div class="row">
-      <div class="col-lg-2"></div>
-      <div class="col-lg-8 col-md-8 col-sm-12">
+      <div class="col-lg-1"></div>
+      <div class="col-lg-10 col-md-8 col-sm-12">
         <div class="card">
           <div class="card-header">
             <i class="fa fa-align-justify"></i> Listado de Ingresos
@@ -69,65 +69,17 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td style="text-align: center;">Entretenimiento</td>
-                  <td>Pago netflix</td>
-                  <td style="text-align: center;">12/02/2021</td>
-                  <td style="text-align: center;">45.00</td>
+                <tr *ngFor="let income of listIncomes">
+                  <td style="text-align: center;">{{ income.descriptionCategory }}</td>
+                  <td>{{ income.description }}</td>
+                  <td style="text-align: center;">{{ income.dateIncome | date:'dd/MM/yyyy' }}</td>
+                  <td style="text-align: center;">{{ income.amount | number: '1.2-2'}}</td>
                   <td>
-                      <div style="text-align: center;">
-                        <a style="cursor: pointer;"><i class="fa fa-trash fa-lg"></i></a>&nbsp;
-                        <a style="cursor: pointer;"><i class="fa fa-edit fa-lg"></i></a>
-                      </div>
-                   </td>
-                </tr>
-                <tr>
-                  <td style="text-align: center;">Entretenimiento</td>
-                  <td>Pago netflix</td>
-                  <td style="text-align: center;">12/02/2021</td>
-                  <td style="text-align: center;">45.00</td>
-                  <td>
-                      <div style="text-align: center;">
-                        <a style="cursor: pointer;"><i class="fa fa-trash fa-lg"></i></a>&nbsp;
-                        <a style="cursor: pointer;"><i class="fa fa-edit fa-lg"></i></a>
-                      </div>
-                   </td>
-                </tr>
-                <tr>
-                  <td style="text-align: center;">Entretenimiento</td>
-                  <td>Pago netflix</td>
-                  <td style="text-align: center;">12/02/2021</td>
-                  <td style="text-align: center;">45.00</td>
-                  <td>
-                      <div style="text-align: center;">
-                        <a style="cursor: pointer;"><i class="fa fa-trash fa-lg"></i></a>&nbsp;
-                        <a style="cursor: pointer;"><i class="fa fa-edit fa-lg"></i></a>
-                      </div>
-                   </td>
-                </tr>
-                <tr>
-                  <td style="text-align: center;">Entretenimiento</td>
-                  <td>Pago netflix</td>
-                  <td style="text-align: center;">12/02/2021</td>
-                  <td style="text-align: center;">45.00</td>
-                  <td>
-                      <div style="text-align: center;">
-                        <a style="cursor: pointer;"><i class="fa fa-trash fa-lg"></i></a>&nbsp;
-                        <a style="cursor: pointer;"><i class="fa fa-edit fa-lg"></i></a>
-                      </div>
-                   </td>
-                </tr>
-                <tr>
-                  <td style="text-align: center;">Entretenimiento</td>
-                  <td>Pago netflix</td>
-                  <td style="text-align: center;">12/02/2021</td>
-                  <td style="text-align: center;">45.00</td>
-                  <td>
-                      <div style="text-align: center;">
-                        <a style="cursor: pointer;"><i class="fa fa-trash fa-lg"></i></a>&nbsp;
-                        <a style="cursor: pointer;"><i class="fa fa-edit fa-lg"></i></a>
-                      </div>
-                   </td>
+                    <div style="text-align: center;">
+                      <a style="cursor: pointer;"><i class="fa fa-trash fa-lg"></i></a>&nbsp;
+                      <a style="cursor: pointer;"><i class="fa fa-edit fa-lg"></i></a>
+                    </div>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -146,7 +98,7 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-2"></div>
+      <div class="col-lg-1"></div>
       <!--/.col-->
     </div>
     <!--/.row-->

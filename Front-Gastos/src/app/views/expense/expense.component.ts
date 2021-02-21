@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import {ModalDirective} from 'ngx-bootstrap/modal';
 import Swal from 'sweetalert2';
-import { FilterExpense } from '../../models/expense';
+import { FilterExpense, ExpenseModel } from '../../models/expense';
 import { BsDatepickerConfig, BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { esLocale } from 'ngx-bootstrap/locale';
@@ -19,6 +19,7 @@ export class ExpenseComponent implements OnInit {
   titleModal: string;
   form: FormGroup;
   filter: FilterExpense = new FilterExpense();
+  listExpenses: ExpenseModel[] = [];
   public bsConfigInicio: Partial<BsDatepickerConfig>;
 
   constructor(
@@ -40,6 +41,53 @@ export class ExpenseComponent implements OnInit {
         showWeekNumbers: false,
         isAnimated: true
       });
+
+    // tempExpenses 
+    var objeto1 = new ExpenseModel();
+    objeto1.idExpense = 1;
+    objeto1.idCategory = 1;
+    objeto1.descriptionCategory = 'Entretenimiento';
+    objeto1.description = 'Pago Netflix';
+    objeto1.dateExpense = new Date();
+    objeto1.amount = 150.5;
+
+    var objeto2 = new ExpenseModel();
+    objeto2.idExpense = 2;
+    objeto2.idCategory = 2;
+    objeto2.descriptionCategory = 'Recibo';
+    objeto2.description = 'Pago Luz';
+    objeto2.dateExpense = new Date();
+    objeto2.amount = 172.5;
+
+    var objeto3 = new ExpenseModel();
+    objeto3.idExpense = 3;
+    objeto3.idCategory = 2;
+    objeto3.descriptionCategory = 'Recibo';
+    objeto3.description = 'Pago Agua';
+    objeto3.dateExpense = new Date();
+    objeto3.amount = 73;
+
+    var objeto4 = new ExpenseModel();
+    objeto4.idExpense = 4;
+    objeto4.idCategory = 2;
+    objeto4.descriptionCategory = 'Recibo';
+    objeto4.description = 'Pago Amazon';
+    objeto4.dateExpense = new Date();
+    objeto4.amount = 16;
+
+    var objeto5 = new ExpenseModel();
+    objeto5.idExpense = 5;
+    objeto5.idCategory = 2;
+    objeto5.descriptionCategory = 'Recibo';
+    objeto5.description = 'Pago Telefono';
+    objeto5.dateExpense = new Date();
+    objeto5.amount = 69.9;
+
+    this.listExpenses.push(objeto1);  
+    this.listExpenses.push(objeto2);  
+    this.listExpenses.push(objeto3);  
+    this.listExpenses.push(objeto4);  
+    this.listExpenses.push(objeto5);    
   }
 
   initComponent() {

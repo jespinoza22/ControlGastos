@@ -1,0 +1,224 @@
+<div class="animated fadeIn">   
+    <!--/.row-->
+    <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8 col-md-8 col-sm-12">
+            <div class="card">
+                <div class="card-header" style="text-align: center;">
+                  <strong>GASTOS</strong>
+                </div>
+                <div class="card-body">
+                  <div class="form-inline">
+                    <div class="form-group row col-md-6">                        
+                        <div class="col-md-4 align-label">
+                          <label class="col-form-label" for="dateRange">Rango</label>
+                        </div>
+                        <div class="col-md-4">
+                          <input type="text" id="dateRange" [(ngModel)]="filter.dateRange" class="form-control" placeholder="Datepicker" bsDaterangepicker [bsConfig]="bsConfigInicio">
+                        </div>
+                    </div>
+                    <div class="form-group row col-md-6">                      
+                      <div class="col-md-4 align-label">
+                        <label class="col-form-label" for="selectCategory">Categoría</label>
+                      </div>
+                      <div class="col-md-8 col-sm-12">
+                        <select [(ngModel)]= "filter.category" id="selectCategory" name="selectCategory" style="width: 90%;" class="form-control">
+                          <option value=0>Todos</option> 
+                          <option value=1>Option #1</option>
+                          <option value=2>Option #2</option>
+                          <option value=3>Option #3</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div><br>
+                  <div class="form-inline">                    
+                    <div class="form-group row col-md-12">                        
+                        <div class="col-md-2 align-label">
+                          <label class="col-form-label" for="description">Descripción</label>
+                        </div>
+                        <div class="col-md-8 col-sm-12">
+                          <input type="text" [(ngModel)] = "filter.description" id="description" style="width: 90%;" name="description" class="form-control" placeholder="Descripción">
+                        </div>
+                      </div>
+                  </div>
+                </div>
+                <div class="card-footer" style="text-align: center;">
+                  <button  class="btn btn-md btn-primary" (click)="findExpense()"><i class="fa fa-search fa-lg"></i> Buscar</button>
+                  <button  class="btn btn-md btn-primary" data-toggle="modal" (click)="primaryModal.show()"><i class="fa fa-plus fa-lg"></i> Nuevo</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2"></div>        
+    </div>
+    <div class="row">
+      <div class="col-lg-1"></div>
+      <div class="col-lg-10 col-md-8 col-sm-12">
+        <div class="card">
+          <div class="card-header">
+            <i class="fa fa-align-justify"></i> Listado de Gastos
+          </div>
+          <div class="card-body">
+            <table class="table table-bordered table-striped table-sm">
+              <thead>
+                <tr>
+                  <th style="text-align: center;">Categoria</th>
+                  <th style="text-align: center;">Descripción</th>
+                  <th style="text-align: center;">Fecha</th>
+                  <th style="text-align: center;">Monto</th>
+                  <th style="text-align: center;">Acción</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="text-align: center;">Entretenimiento</td>
+                  <td>Pago netflix</td>
+                  <td style="text-align: center;">12/02/2021</td>
+                  <td style="text-align: center;">45.00</td>
+                  <td>
+                      <div style="text-align: center;">
+                        <a style="cursor: pointer;"><i class="fa fa-trash fa-lg"></i></a>&nbsp;
+                        <a style="cursor: pointer;"><i class="fa fa-edit fa-lg"></i></a>
+                      </div>
+                   </td>
+                </tr>
+                <tr>
+                  <td style="text-align: center;">Entretenimiento</td>
+                  <td>Pago netflix</td>
+                  <td style="text-align: center;">12/02/2021</td>
+                  <td style="text-align: center;">45.00</td>
+                  <td>
+                      <div style="text-align: center;">
+                        <a style="cursor: pointer;"><i class="fa fa-trash fa-lg"></i></a>&nbsp;
+                        <a style="cursor: pointer;"><i class="fa fa-edit fa-lg"></i></a>
+                      </div>
+                   </td>
+                </tr>
+                <tr>
+                  <td style="text-align: center;">Entretenimiento</td>
+                  <td>Pago netflix</td>
+                  <td style="text-align: center;">12/02/2021</td>
+                  <td style="text-align: center;">45.00</td>
+                  <td>
+                      <div style="text-align: center;">
+                        <a style="cursor: pointer;"><i class="fa fa-trash fa-lg"></i></a>&nbsp;
+                        <a style="cursor: pointer;"><i class="fa fa-edit fa-lg"></i></a>
+                      </div>
+                   </td>
+                </tr>
+                <tr>
+                  <td style="text-align: center;">Entretenimiento</td>
+                  <td>Pago netflix</td>
+                  <td style="text-align: center;">12/02/2021</td>
+                  <td style="text-align: center;">45.00</td>
+                  <td>
+                      <div style="text-align: center;">
+                        <a style="cursor: pointer;"><i class="fa fa-trash fa-lg"></i></a>&nbsp;
+                        <a style="cursor: pointer;"><i class="fa fa-edit fa-lg"></i></a>
+                      </div>
+                   </td>
+                </tr>
+                <tr>
+                  <td style="text-align: center;">Entretenimiento</td>
+                  <td>Pago netflix</td>
+                  <td style="text-align: center;">12/02/2021</td>
+                  <td style="text-align: center;">45.00</td>
+                  <td>
+                      <div style="text-align: center;">
+                        <a style="cursor: pointer;"><i class="fa fa-trash fa-lg"></i></a>&nbsp;
+                        <a style="cursor: pointer;"><i class="fa fa-edit fa-lg"></i></a>
+                      </div>
+                   </td>
+                </tr>
+              </tbody>
+            </table>
+            <nav>
+              <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="#">Prev</a></li>
+                <li class="page-item active">
+                  <a class="page-link" href="#">1</a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">4</a></li>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-1"></div>
+      <!--/.col-->
+    </div>
+    <!--/.row-->
+  </div>
+  
+  <div bsModal #primaryModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-primary" role="document">
+      <form class="modal-content" [formGroup]="form">
+        <div class="modal-header">
+          <h4 class="modal-title">{{ titleModal }}</h4>
+          <button type="button" class="close" (click)="primaryModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="card-body">
+                <div class="form-inline">
+                    <div class="form-group row col-md-12">                        
+                        <div class="col-md-4 align-label" >
+                            <label class="col-form-label" for="select1">Categoría :</label>
+                        </div>
+                        <div class="col-md-8 col-sm-12">
+                          <select formControlName="category" id="select1" name="select1" style="width: 100%;" class="form-control">
+                            <option value="" selected>Seleccione</option>
+                            <option value="1">Option #1</option>
+                            <option value="2">Option #2</option>
+                            <option value="3">Option #3</option>
+                          </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-inline">
+                    <div class="form-group row col-md-12">
+                        <div class="col-md-4 align-label">
+                            <label class="col-form-label" for="select1">Fecha :</label>
+                        </div>
+                        <div class="col-md-4">
+                          <input formControlName="date" class="form-control" id="date-input" type="date" name="date-input" placeholder="date">
+                          <!-- <span class="help-block">Please enter a valid date</span> -->
+                        </div>
+                      </div>
+                </div>
+                <div class="form-inline">
+                    <div class="form-group row col-md-12">
+                        <div class="col-md-4 align-label" >
+                            <label class="col-form-label" for="select1">Descripcion :</label>
+                        </div>
+                        <div class="col-md-8 col-sm-12">
+                          <input formControlName="description" type="text" id="text-input" style="width: 100%;" name="text-input" class="form-control" placeholder="Descripción">
+                          <!-- <span class="help-block">This is a help text</span> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="form-inline">
+                    <div class="form-group row col-md-12">
+                        <div class="col-md-4 align-label" >
+                            <label class="col-form-label" for="select1">Monto :</label>
+                        </div>
+                        <div class="col-md-8 col-sm-12">
+                          <input formControlName="amount" type="text" id="text-input" style="width: 50%;" name="text-input" class="form-control" placeholder="0.00">
+                          <!-- <span class="help-block">This is a help text</span> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="primaryModal.hide()">Cerrar</button>
+          <button type="button" class="btn btn-primary" (click)="save()" [disabled]="form.invalid">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  

@@ -34,7 +34,7 @@
                   <div class="form-inline">                    
                     <div class="form-group row col-md-12">                        
                         <div class="col-md-2 align-label">
-                          <label class="col-form-label" for="description">Descripción</label>
+                          <label class="col-form-label" autocomplete="off" for="description">Descripción</label>
                         </div>
                         <div class="col-md-8 col-sm-12">
                           <input type="text" [(ngModel)] = "filter.description" id="description" style="width: 90%;" name="description" class="form-control" placeholder="Descripción">
@@ -136,8 +136,7 @@
                             <label class="col-form-label" for="select1">Fecha :</label>
                         </div>
                         <div class="col-md-4">
-                          <input formControlName="date" class="form-control" id="date-input" type="date" name="date-input" placeholder="date">
-                          <!-- <span class="help-block">Please enter a valid date</span> -->
+                          <input type="text" id="dateIncome" formControlName="date" class="form-control"  bsDatepicker [bsConfig]="bsConfigInicio">
                         </div>
                       </div>
                 </div>
@@ -147,7 +146,7 @@
                             <label class="col-form-label" for="select1">Descripcion :</label>
                         </div>
                         <div class="col-md-8 col-sm-12">
-                          <input formControlName="description" type="text" id="text-input" style="width: 100%;" name="text-input" class="form-control" placeholder="Descripción">
+                          <input formControlName="description" autocomplete="off" type="text" id="text-input" style="width: 100%;" name="text-input" class="form-control" placeholder="Descripción">
                           <!-- <span class="help-block">This is a help text</span> -->
                         </div>
                     </div>
@@ -158,7 +157,7 @@
                             <label class="col-form-label" for="select1">Monto :</label>
                         </div>
                         <div class="col-md-8 col-sm-12">
-                          <input formControlName="amount" (keypress)="numbersOnly($event)" type="text" id="text-input" style="width: 50%;" name="text-input" class="form-control" placeholder="0.00">
+                          <input formControlName="amount" autocomplete="off" (keypress)="numbersOnly($event)" type="text" id="text-input" style="width: 50%;" name="text-input" class="form-control" placeholder="0.00">
                           <!-- <span class="help-block">This is a help text</span> -->
                         </div>
                     </div>

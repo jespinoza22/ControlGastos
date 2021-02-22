@@ -35,7 +35,7 @@ export class ExpenseComponent implements OnInit {
   ngOnInit(): void {    
     this.bsConfigInicio = Object.assign({},
       {
-        dateInputFormat: 'dd/MM/yyyy',
+        dateInputFormat: 'DD/MM/YYYY',
         locale: 'es',
         containerClass: 'theme-blue',
         showWeekNumbers: false,
@@ -97,9 +97,10 @@ export class ExpenseComponent implements OnInit {
   }
 
   private buildForm () {
+    var dateNow = new Date();
     this.form =  this.formBuilder.group({
       category: ['', [Validators.required]],
-      date: ['', [Validators.required]],
+      date: [dateNow, [Validators.required]],
       description: ['', [Validators.required]],
       amount: ['', [Validators.required, Validators.pattern(/((\d+)((\.\d{1,2})?))$/)]]
     });

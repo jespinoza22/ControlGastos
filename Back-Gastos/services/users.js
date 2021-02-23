@@ -17,6 +17,17 @@ class UserService {
     console.log('lista', lista);
     return lista;
   }
+
+  async createUser(user, callback) {
+    const hashedPassword = await bcrypt.hash(user.spassword, 10);
+
+    var query = `CALL spi_create_user('${user.suser}', '${hashedPassword}', '${user.snames}', '${user.slastname}', 
+                '${user.slastname2}', '${user.semail}', '${user.sphone}', '${user.saddress}', ${user.nid_user_register})`;
+
+    await this.mysqlDB.callProcedure(query, (res) => {
+      callback(res);
+    });
+  }
 }
 
 module.exports = UserService;

@@ -93,3 +93,4 @@ values ('KEY_TIPO', 1, 'INGRESO', 'Tipo Ingreso', 'A', 0, sysdate(), 1, null, nu
 insert into controlgastos.tb_parameter (skey, nid_value, svalue, sdescription,	sactive, nid_user, dregister, nid_user_register, dupdate, nid_user_update) 
 values ('KEY_TIPO', 2, 'GASTO', 'Tipo Ingreso', 'A', 0, sysdate(), 1, null, null);
 
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root'

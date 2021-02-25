@@ -36,15 +36,15 @@ class mysqlLib {
     // return list;
     configMySql.query(sprocedure, true, (error, results, fields) => {
       if (error) {
-        return console.error(error.message);
+        return console.error(error.message, 'Errrorx');
       }
       // console.log(results[0]);
       return callback(results[0]);
       //return results[0];
     });
+    configMySql.end();
     //console.log('resultado', resultado);
     //return resultado;
-    configMySql.end();
   }
 }
 //   con.connect(function(err) {

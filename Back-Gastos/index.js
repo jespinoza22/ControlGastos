@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 
 const authApi = require('./routes/auth');
+const utilsApi = require('./routes/utils');
 
 // const UserService = require('./services/users');
 
@@ -14,6 +15,7 @@ app.use(express.json());
 
 // routes
 authApi(app);
+utilsApi(app);
 
 // app.get('/', function (req, res) {
 //   res.send('Hello world');

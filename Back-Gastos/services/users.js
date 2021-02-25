@@ -6,17 +6,17 @@ class UserService {
     this.mysqlDB = new mysqlLib();
   }
 
-  async lisTest(callback) {
-    let lista = null;
-    await this.mysqlDB.callProcedure(
-      'CALL sps_parameter("KEY_TIPO", 0)',
-      (res) => {
-        callback(res);
-      }
-    );
-    console.log('lista', lista);
-    return lista;
-  }
+  // async lisTest(callback) {
+  //   let lista = null;
+  //   await this.mysqlDB.callProcedure(
+  //     'CALL sps_parameter("KEY_TIPO", 0)',
+  //     (res) => {
+  //       callback(res);
+  //     }
+  //   );
+  //   console.log('lista', lista);
+  //   return lista;
+  // }
 
   async createUser(user, callback) {
     const hashedPassword = await bcrypt.hash(user.spassword, 10);
@@ -29,17 +29,16 @@ class UserService {
     });
   }
 
-  async login(user, callback) {
+  async getuser(user, callback) {
     //const hashedPassword = await bcrypt.hash(user.spassword, 10);
 
     //console.log(hashedPassword, user.spassword);
 
-    var query = `CALL sps_login('${user.suser}')`;
+    var query = `CALL sps_login('${user}')`;
 
     await this.mysqlDB.callProcedure(query, (res) => {
-      console.log(res[0].idrespuesta, 'resultado');
-
-      if (res[0].idrespuesta === 0) {
+      return callback(res[0]);
+      /*if (res[0].idrespuesta === 0) {
         const objectUser = {
           idrespuesta: '',
           message: '',
@@ -66,7 +65,7 @@ class UserService {
             callback(objectUser);
           }
         });
-      }
+      }*/
     });
   }
 }

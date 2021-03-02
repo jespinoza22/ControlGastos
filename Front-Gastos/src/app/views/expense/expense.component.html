@@ -24,9 +24,10 @@
                       <div class="col-md-8 col-sm-12">
                         <select [(ngModel)]= "filter.category" id="selectCategory" name="selectCategory" style="width: 90%;" class="form-control">
                           <option value=0>Todos</option> 
-                          <option value=1>Option #1</option>
+                          <option *ngFor="let item of listCategory" [value] = "item.nid_category">{{ item.sname_type }}</option>
+                          <!-- <option value=1>Option #1</option>
                           <option value=2>Option #2</option>
-                          <option value=3>Option #3</option>
+                          <option value=3>Option #3</option> -->
                         </select>
                       </div>
                     </div>
@@ -123,9 +124,10 @@
                         <div class="col-md-8 col-sm-12">
                           <select formControlName="category" id="select1" name="select1" style="width: 100%;" class="form-control">
                             <option value="" selected>Seleccione</option>
-                            <option value="1">Option #1</option>
+                            <option *ngFor="let item of listCategory" [value] = "item.nid_category">{{ item.sname_type }}</option>
+                            <!-- <option value="1">Option #1</option>
                             <option value="2">Option #2</option>
-                            <option value="3">Option #3</option>
+                            <option value="3">Option #3</option> -->
                           </select>
                         </div>
                     </div>

@@ -24,9 +24,10 @@
                       <div class="col-md-8 col-sm-12">
                         <select [(ngModel)]= "filter.category" id="selectCategory" name="selectCategory" style="width: 90%;" class="form-control">
                           <option value=0>Todos</option> 
-                          <option value=1>Option #1</option>
+                          <option *ngFor="let item of listCategory" [value] = "item.nid_category">{{ item.sname_type }}</option>
+                          <!-- <option value=1>Option #1</option>
                           <option value=2>Option #2</option>
-                          <option value=3>Option #3</option>
+                          <option value=3>Option #3</option> -->
                         </select>
                       </div>
                     </div>
@@ -44,7 +45,7 @@
                 </div>
                 <div class="card-footer" style="text-align: center;">
                   <button  class="btn btn-md btn-primary" (click)="findIncome()"><i class="fa fa-search fa-lg"></i> Buscar</button>
-                  <button  class="btn btn-md btn-primary" data-toggle="modal" (click)="primaryModal.show()"><i class="fa fa-plus fa-lg"></i> Nuevo</button>
+                  <button  class="btn btn-md btn-primary" data-toggle="modal" (click)="newIncome()"><i class="fa fa-plus fa-lg"></i> Nuevo</button>
                 </div>
             </div>
         </div>
@@ -76,15 +77,15 @@
                   <td style="text-align: center;">{{ income.amount | number: '1.2-2'}}</td>
                   <td>
                     <div style="text-align: center;">
-                      <a style="cursor: pointer;"><i class="fa fa-trash fa-lg"></i></a>&nbsp;
-                      <a style="cursor: pointer;"><i class="fa fa-edit fa-lg"></i></a>
+                      <a style="cursor: pointer;" (click)="deleteIncome(income.idIncome)"><i class="fa fa-trash fa-lg"></i></a>&nbsp;
+                      <a style="cursor: pointer;" (click)="editIncome(income)"><i class="fa fa-edit fa-lg"></i></a>
                     </div>
                   </td>
                 </tr>
               </tbody>
             </table>
             <nav>
-              <ul class="pagination">
+              <!-- <ul class="pagination">
                 <li class="page-item"><a class="page-link" href="#">Prev</a></li>
                 <li class="page-item active">
                   <a class="page-link" href="#">1</a>
@@ -93,7 +94,11 @@
                 <li class="page-item"><a class="page-link" href="#">3</a></li>
                 <li class="page-item"><a class="page-link" href="#">4</a></li>
                 <li class="page-item"><a class="page-link" href="#">Next</a></li>
-              </ul>
+              </ul> -->
+              <div class="col-xs-12 col-12">
+                <pagination [boundaryLinks]="true" [totalItems]="totalItems" (pageChanged)="pageChanged($event)" [(ngModel)]="currentPage" class="pagination-sm" [maxSize]="6"
+                            previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
+              </div> 
             </nav>
           </div>
         </div>
@@ -123,9 +128,10 @@
                         <div class="col-md-8 col-sm-12">
                           <select formControlName="category" id="select1" name="select1" style="width: 100%;" class="form-control">
                             <option value="" selected>Seleccione</option>
-                            <option value="1">Option #1</option>
+                            <option *ngFor="let item of listCategory" [value] = "item.nid_category">{{ item.sname_type }}</option>
+                            <!-- <option value="1">Option #1</option>
                             <option value="2">Option #2</option>
-                            <option value="3">Option #3</option>
+                            <option value="3">Option #3</option> -->
                           </select>
                         </div>
                     </div>
@@ -172,4 +178,4 @@
     </div>
   </div>
 
-  
+  <ngx-spinner></ngx-spinner>

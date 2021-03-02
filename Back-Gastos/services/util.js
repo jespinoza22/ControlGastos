@@ -11,11 +11,15 @@ class UtilService {
     var query = `CALL sps_parameter("${key}", 0)`;
 
     await this.mysqlDB.callProcedure(query, (res) => {
-      console.log('result', res);
-      return callback(res[0]);
+      return callback(res);
     });
-    //console.log('lista', lista);
-    //return lista;
+  }
+
+  async listCategories(id_type, callback) {
+    var query = `CALL sps_cetegory(${id_type})`;
+    await this.mysqlDB.callProcedure(query, (res) => {
+      return callback(res);
+    });
   }
 }
 

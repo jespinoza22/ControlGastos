@@ -4,10 +4,13 @@ import { CommonModule } from '@angular/common';
 import { IncomeRoutingModule } from './income-routing.module';
 import { IncomeComponent } from './income.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 // Modal Component
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
+
 
 @NgModule({
   declarations: [IncomeComponent],
@@ -17,7 +20,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     ModalModule.forRoot(),
     BsDatepickerModule.forRoot(),
-    FormsModule
+    PaginationModule.forRoot(),
+    FormsModule,
+    NgxSpinnerModule
   ]
 })
 export class IncomeModule { }

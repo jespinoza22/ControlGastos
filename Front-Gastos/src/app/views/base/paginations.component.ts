@@ -6,7 +6,7 @@ import { Component, Input, ViewEncapsulation  } from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class PaginationsComponent {
-
+ 
   constructor() { }
 
   totalItems: number = 64;

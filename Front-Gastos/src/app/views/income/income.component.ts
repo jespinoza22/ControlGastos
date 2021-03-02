@@ -1,4 +1,9 @@
 import { FilterIncome, IncomeModel } from './../../models/income';
+import { UtilsService } from '../../services/utils.service';
+import { Category } from '../../models/utils';
+import { IncomeService } from '../../services/income.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { ModalDirective } from 'ngx-bootstrap/modal';
@@ -6,6 +11,7 @@ import Swal from 'sweetalert2';
 import { BsDatepickerConfig, BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { esLocale } from 'ngx-bootstrap/locale';
+import { getDate, getMonth } from 'ngx-bootstrap/chronos/utils/date-getters';
 defineLocale('es', esLocale);
  
 @Component({
@@ -20,16 +26,24 @@ export class IncomeComponent implements OnInit {
   form: FormGroup;
   filter: FilterIncome = new FilterIncome();
   listIncomes: IncomeModel[] = [];
+  listIncomesTemp: IncomeModel[] = [];
   public bsConfigInicio: Partial<BsDatepickerConfig>;
-  
+  listCategory: Category[] = [];
+  income :IncomeModel =  new IncomeModel();
+  incomeEdit :IncomeModel =  null;
+  totalItems: number = 0;
+  currentPage: number   = 1;
 
   constructor(
     private formBuilder: FormBuilder,
-    private localeService: BsLocaleService
+    private localeService: BsLocaleService,
+    private utilService: UtilsService,
+    private incomeService: IncomeService,
+    private spinner: NgxSpinnerService,
   ) { 
     this.localeService.use('es');
     this.titleModal = "Nuevo Ingreso";
-    this.buildForm();
+    this.buildForm(false, null);
     this.initComponent();
   }
 
@@ -42,53 +56,9 @@ export class IncomeComponent implements OnInit {
         showWeekNumbers: false,
         isAnimated: true
       });
-
-    // tempExpenses 
-    var objeto1 = new IncomeModel();
-    objeto1.idIncome = 1;
-    objeto1.idCategory = 1;
-    objeto1.descriptionCategory = 'Sueldo';
-    objeto1.description = 'Pago Sueldo';
-    objeto1.dateIncome = new Date();
-    objeto1.amount = 150.5;
-    
-    var objeto2 = new IncomeModel();
-    objeto2.idIncome = 2;
-    objeto2.idCategory = 2;
-    objeto2.descriptionCategory = 'Sueldo';
-    objeto2.description = 'Pago Sueldo';
-    objeto2.dateIncome = new Date();
-    objeto2.amount = 172.5;
-
-    var objeto3 = new IncomeModel();
-    objeto3.idIncome = 3;
-    objeto3.idCategory = 2;
-    objeto3.descriptionCategory = 'Sueldo';
-    objeto3.description = 'Pago Sueldo';
-    objeto3.dateIncome = new Date();
-    objeto3.amount = 73;
-
-    var objeto4 = new IncomeModel();
-    objeto4.idIncome = 4;
-    objeto4.idCategory = 2;
-    objeto4.descriptionCategory = 'Freelance';
-    objeto4.description = 'Pago sistema';
-    objeto4.dateIncome = new Date();
-    objeto4.amount = 16;
-
-    var objeto5 = new IncomeModel();
-    objeto5.idIncome = 5;
-    objeto5.idCategory = 2;
-    objeto5.descriptionCategory = 'Freelance';
-    objeto5.description = 'Dinero prestado';
-    objeto5.dateIncome = new Date();
-    objeto5.amount = 69.9;
-
-    this.listIncomes.push(objeto1);    
-    this.listIncomes.push(objeto2);   
-    this.listIncomes.push(objeto3);   
-    this.listIncomes.push(objeto4);   
-    this.listIncomes.push(objeto5);   
+   
+    this.getListCategory();
+    this.findIncome();
   }
 
   initComponent() {
@@ -97,14 +67,25 @@ export class IncomeComponent implements OnInit {
     this.filter.dateRange = [new Date(date.getFullYear(), date.getMonth(), 1), new Date(date.getFullYear(), date.getMonth() + 1, 0)];
   }
 
-  private buildForm () {
-    var dateNow = new Date();
-    this.form =  this.formBuilder.group({
-      category: ['', [Validators.required]],
-      date: [dateNow, [Validators.required]],
-      description: ['', [Validators.required]],
-      amount: ['', [Validators.required, Validators.pattern(/((\d+)((\.\d{1,2})?))$/)]]
-    });
+  private buildForm (isEdit: boolean, income: IncomeModel) {
+    if(!isEdit) {
+      var dateNow = new Date();
+      this.form =  this.formBuilder.group({
+        category: ['', [Validators.required]],
+        date: [dateNow, [Validators.required]],
+        description: ['', [Validators.required]],
+        amount: ['', [Validators.required, Validators.pattern(/((\d+)((\.\d{1,2})?))$/)]]
+      });
+    } else {
+      //var dateIncome = new Date(income.dateIncome.getFullYear(), income.dateIncome.getMonth(), income.dateIncome.getDate());
+      var dateIncome = new Date(income.dateIncome);
+      this.form =  this.formBuilder.group({
+        category: [income.idCategory, [Validators.required]],
+        date: [dateIncome, [Validators.required]],
+        description: [income.description, [Validators.required]],
+        amount: [income.amount, [Validators.required, Validators.pattern(/((\d+)((\.\d{1,2})?))$/)]]
+      });
+    }   
   }
 
   numbersOnly(event: any) {
@@ -115,37 +96,144 @@ export class IncomeComponent implements OnInit {
     return true;
   }
   
+  getListCategory() {
+      this.utilService.listCategories(1).subscribe((res: any) => {
+        this.listCategory = res.data;
+      });
+  }
+
   findIncome(){
-    console.log('rango 1 =>',this.filter.dateRange[0]);
-    console.log('rango 2 =>',this.filter.dateRange[1]);
-    console.log('categoria =>',this.filter.category);
-    console.log('descripcion =>',this.filter.description);
+    this.spinner.show();
+    let dateStart = this.filter.dateRange[0];
+    dateStart = new Date(dateStart.getFullYear(), dateStart.getMonth(), dateStart.getDate());
+    let dateEnd = this.filter.dateRange[1];
+    dateEnd = new Date(dateEnd.getFullYear(), dateEnd.getMonth(), dateEnd.getDate());
+   
+   this.incomeService.listIncome({
+    nid_user: 1,
+    dateStart,
+    dateEnd,
+    id_category: this.filter.category,
+    description: typeof this.filter.description === 'undefined' ? '' : this.filter.description,
+   }).subscribe((res: any) => {
+      if (res.data != null) {
+        this.listIncomes = res.data;
+        this.totalItems = this.listIncomes.length;
+        console.log(this.listIncomes, 'this.listIncomes');
+      }
+      this.spinner.hide();
+   });
+  }
+
+  pageChanged(event: any) {
+    console.log('Page changed to: ' + event.page);
+    console.log('Number items per page: ' + event.itemsPerPage);
+  }
+
+  deleteIncome(idIncome: number) {
+    Swal.fire({
+      title: '¿Estas seguro de eliminar el Ingreso?',
+      showDenyButton: false,
+      showCancelButton: true,      
+      confirmButtonText: `Eliminar`,
+      confirmButtonColor: '#20a8d8',
+      cancelButtonText: 'Cancelar',
+      icon: 'info'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.incomeService.deleteIncome(idIncome).subscribe((res: any) => {
+            try {
+              if (res.data.resultado === 0) {
+                Swal.fire(
+                  'Satisfactorio',
+                  'Se elimino el Ingreso Correctamente',
+                  'success'
+                  ).then(() => 
+                    {
+                      this.findIncome();
+                    }
+                  );;
+              } else {
+                Swal.fire(
+                  '',
+                  'Hubo un error al eliminar el Ingreso',
+                  'info'
+                  )
+              }
+            } catch (error) {
+              Swal.fire(
+              '',
+              'Hubo un error al eliminar el Ingreso',
+              'info'
+              )
+            }
+        })
+      } 
+    })
+  }
+
+  newIncome() {    
+    this.titleModal = "Nuevo Ingreso";
+    this.form.reset();
+    this.buildForm(false, null);
+    this.primaryModal.show();
+  }
+
+  editIncome(income: IncomeModel) {
+    console.log(income, 'income');    
+    this.titleModal = "Editar Ingreso";
+    this.incomeEdit = new IncomeModel();
+    this.incomeEdit = income;
+    this.form.reset();
+    this.buildForm(true, income);
+    this.primaryModal.show();
   }
 
   save() {
     if(this.form.valid){
-      console.log(this.form.value);
+      this.income.amount = Number(this.form.get('amount').value);
+      this.income.idCategory = Number(this.form.get('category').value);
+      this.income.dateIncome = this.form.get('date').value;
+      const dateInput = this.income.dateIncome;
+      this.income.dateIncome = new Date(dateInput.getFullYear(), dateInput.getMonth(), dateInput.getDate());
+      this.income.description = this.form.get('description').value;
+      this.income.idCoin = 1;
+      this.income.idUser = 1;
+      if(this.incomeEdit !== null) this.income.idIncome = this.incomeEdit.idIncome;
+      else this.income.idIncome = 0;
+      
+      this.incomeEdit = null;
 
-      console.log(this.form.get('amount').value);
-      if (true) {
+      this.incomeService.createIncome(this.income).subscribe((res: any) => {
+        try {
+          if (res.data.resultado === 0) {
+            Swal.fire(
+              'Satisfactorio',
+              res.data.message,
+              'success'
+              ).then(() => 
+                {
+                  this.form.reset();
+                  this.buildForm(false, null);
+                  this.primaryModal.hide();
+                  this.findIncome();
+                }
+              );;
+          } else {
+            Swal.fire(
+              '',
+              'Hubo un error al guardar la información',
+              'info'
+              )
+          }
+        } catch (error) {
           Swal.fire(
-          'Satisfactorio',
-          'El ingreso fue agregado correctamente',
-          'success'
-          ).then(() => 
-            {
-              this.form.reset();
-              this.buildForm();
-              this.primaryModal.hide();
-            }
-          );;
-      } else {
-        Swal.fire(
-          '',
-          'Hubo un error al guardar la información',
-          'info'
-          )
-      } 
+            '',
+            'Hubo un error al guardar la información',
+            'info'
+            )
+        }
+      });
     } else {
       this.form.markAllAsTouched();
     }

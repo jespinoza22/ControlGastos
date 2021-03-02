@@ -36,6 +36,7 @@ create table controlgastos.tb_income (
     namoumnt	decimal(20, 2) not null,
     nid_category	int not null,
     nid_user	int not null,
+	ddate		datetime,
     sdescription	varchar(500),
     sactive		char(1),
     dregister	datetime,
@@ -49,10 +50,11 @@ create table controlgastos.tb_income (
 
 create table controlgastos.tb_expense (
 	nid_expense	int not null auto_increment,
-    nid_coina	int not null,
+    nid_coin	int not null,
     namoumnt	decimal(20, 2) not null,
     nid_category	int not null,
     nid_user	int not null,
+	ddate		datetime,
     sdescription	varchar(500),
     sactive		char(1),
     dregister	datetime,
@@ -94,3 +96,24 @@ insert into controlgastos.tb_parameter (skey, nid_value, svalue, sdescription,	s
 values ('KEY_TIPO', 2, 'GASTO', 'Tipo Ingreso', 'A', 0, sysdate(), 1, null, null);
 
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root'
+
+
+/*INSERTS CATEGORY*/
+insert into controlgastos.tb_category (nid_income_expense, sname_type, sdecription, sactive, nid_user, dregister, nid_user_register)
+values (2, 'Ahorro', 'Gastos destinados al Ahorro', 'A', 0, sysdate(), 1);
+insert into controlgastos.tb_category (nid_income_expense, sname_type, sdecription, sactive, nid_user, dregister, nid_user_register)
+values (2, 'Pago', 'Pago de algun motivo', 'A', 0, sysdate(), 1);
+insert into controlgastos.tb_category (nid_income_expense, sname_type, sdecription, sactive, nid_user, dregister, nid_user_register)
+values (2, 'Entretenimiento', 'Gasto por algun tipo de entretenimiento', 'A', 0, sysdate(), 1);
+insert into controlgastos.tb_category (nid_income_expense, sname_type, sdecription, sactive, nid_user, dregister, nid_user_register)
+values (2, 'Compra', 'Gasto por compra de algo', 'A', 0, sysdate(), 1);
+insert into controlgastos.tb_category (nid_income_expense, sname_type, sdecription, sactive, nid_user, dregister, nid_user_register)
+values (2, 'Membresia', 'Gasto por membresia de algun tipo', 'A', 0, sysdate(), 1);
+
+
+insert into controlgastos.tb_category (nid_income_expense, sname_type, sdecription, sactive, nid_user, dregister, nid_user_register)
+values (1, 'Sueldo', 'Ingreso por sueldo', 'A', 0, sysdate(), 1);
+insert into controlgastos.tb_category (nid_income_expense, sname_type, sdecription, sactive, nid_user, dregister, nid_user_register)
+values (1, 'Prestado', 'Ingreso por dinero prestado', 'A', 0, sysdate(), 1);
+insert into controlgastos.tb_category (nid_income_expense, sname_type, sdecription, sactive, nid_user, dregister, nid_user_register)
+values (1, 'Extra', 'Ingreso por extras', 'A', 0, sysdate(), 1);

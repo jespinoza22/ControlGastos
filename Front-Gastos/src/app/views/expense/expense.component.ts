@@ -6,6 +6,8 @@ import { FilterExpense, ExpenseModel } from '../../models/expense';
 import { BsDatepickerConfig, BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { esLocale } from 'ngx-bootstrap/locale';
+import { Category } from '../../models/utils';
+import { UtilsService } from '../../services/utils.service';
 defineLocale('es', esLocale);
 
 @Component({
@@ -21,10 +23,12 @@ export class ExpenseComponent implements OnInit {
   filter: FilterExpense = new FilterExpense();
   listExpenses: ExpenseModel[] = [];
   public bsConfigInicio: Partial<BsDatepickerConfig>;
+  listCategory: Category[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
-    private localeService: BsLocaleService
+    private localeService: BsLocaleService,
+    private utilService: UtilsService
   ) {
     this.localeService.use('es');
     this.titleModal = "Nuevo Gasto";
@@ -113,6 +117,12 @@ export class ExpenseComponent implements OnInit {
         return false;
     return true;
   }
+
+  getListCategory() {
+    this.utilService.listCategories(2).subscribe((res: any) => {
+      this.listCategory = res.data;
+    });
+}
 
   findExpense(){
     console.log('rango 1 =>',this.filter.dateRange[0]);

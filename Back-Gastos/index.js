@@ -1,8 +1,9 @@
 const express = require('express');
 const app = express();
-
+const cors = require('cors');
 const authApi = require('./routes/auth');
 const utilsApi = require('./routes/utils');
+const incomeApi = require('./routes/income');
 
 // const UserService = require('./services/users');
 
@@ -11,13 +12,17 @@ const { config } = require('./config/index');
 // const usersService = new UserService();
 
 //body parser
+app.use(cors()); //Cors for all request
 app.use(express.json());
 
 // routes
 authApi(app);
 utilsApi(app);
+incomeApi(app); // Cors for some domains
+/*
+const corsOptions = { origin: "http://example.com" };
 
-// app.get('/', function (req, res) {
+app.use(cors(corsOptions));*/ // app.get('/', function (req, res) {
 //   res.send('Hello world');
 // });
 

@@ -26,6 +26,23 @@ function utilsApi(app) {
       }
     }
   );
+
+  router.get(
+    '/listCategories/:id_type',
+    passport.authenticate('jwt', { session: false }),
+    async function (req, res, next) {
+      const { id_type } = req.params;
+      try {
+        await utilService.listCategories(id_type, (result) => {
+          res.status(200).json({
+            data: result,
+          });
+        });
+      } catch (error) {
+        next(error);
+      }
+    }
+  );
 }
 
 module.exports = utilsApi;

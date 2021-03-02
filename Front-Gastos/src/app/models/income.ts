@@ -11,4 +11,6 @@ export class IncomeModel {
     description: string;
     dateIncome: Date;
     amount: number;
+    idCoin: number;
+    idUser: number;
 }

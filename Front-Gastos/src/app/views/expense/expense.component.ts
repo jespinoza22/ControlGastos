@@ -47,7 +47,7 @@ export class ExpenseComponent implements OnInit {
       });
 
     // tempExpenses 
-    var objeto1 = new ExpenseModel();
+    /*var objeto1 = new ExpenseModel();
     objeto1.idExpense = 1;
     objeto1.idCategory = 1;
     objeto1.descriptionCategory = 'Entretenimiento';
@@ -91,7 +91,8 @@ export class ExpenseComponent implements OnInit {
     this.listExpenses.push(objeto2);  
     this.listExpenses.push(objeto3);  
     this.listExpenses.push(objeto4);  
-    this.listExpenses.push(objeto5);    
+    this.listExpenses.push(objeto5);   */ 
+    this.getListCategory();
   }
 
   initComponent() {

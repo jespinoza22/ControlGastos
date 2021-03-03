@@ -11,7 +11,6 @@ import Swal from 'sweetalert2';
 import { BsDatepickerConfig, BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { esLocale } from 'ngx-bootstrap/locale';
-import { getDate, getMonth } from 'ngx-bootstrap/chronos/utils/date-getters';
 defineLocale('es', esLocale);
  
 @Component({
@@ -33,6 +32,7 @@ export class IncomeComponent implements OnInit {
   incomeEdit :IncomeModel =  null;
   totalItems: number = 0;
   currentPage: number   = 1;
+  itemsPerPage: number = 10;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -119,16 +119,27 @@ export class IncomeComponent implements OnInit {
       if (res.data != null) {
         this.listIncomes = res.data;
         this.totalItems = this.listIncomes.length;
-        console.log(this.listIncomes, 'this.listIncomes');
+        this.filterPagination();
       }
       this.spinner.hide();
    });
   }
 
   pageChanged(event: any) {
-    console.log('Page changed to: ' + event.page);
-    console.log('Number items per page: ' + event.itemsPerPage);
+    // console.log('Page changed to: ' + event.page);
+    // console.log('Number items per page: ' + event.itemsPerPage);
+    this.currentPage = event.page;
+    this.filterPagination();
   }
+
+  filterPagination() {
+    this.listIncomesTemp = [];
+    this.listIncomesTemp = this.listIncomes.filter((res: IncomeModel, index: number) => {
+      if ( ((this.currentPage - 1) * this.itemsPerPage) <= index && index <= (this.currentPage * this.itemsPerPage) - 1) {
+        return res;
+      }
+    });
+  }  
 
   deleteIncome(idIncome: number) {
     Swal.fire({
@@ -180,7 +191,6 @@ export class IncomeComponent implements OnInit {
   }
 
   editIncome(income: IncomeModel) {
-    console.log(income, 'income');    
     this.titleModal = "Editar Ingreso";
     this.incomeEdit = new IncomeModel();
     this.incomeEdit = income;

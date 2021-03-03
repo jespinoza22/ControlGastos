@@ -12,6 +12,12 @@ import { HttpConfigInterceptor } from '../app/interceptor/HttpConfig';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxSpinnerModule } from 'ngx-spinner';
 
+//imports
+import { CommonModule } from '@angular/common';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
+
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
 };
@@ -25,6 +31,8 @@ import { P404Component } from './views/error/404.component';
 import { P500Component } from './views/error/500.component';
 import { LoginComponent } from './views/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
+
+
 
 const APP_CONTAINERS = [
   DefaultLayoutComponent
@@ -47,6 +55,9 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { IncomeComponent } from './views/income/income.component';
+import { ExpenseComponent } from './views/expense/expense.component';
+
 
 @NgModule({
   imports: [
@@ -68,6 +79,14 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     HttpClientModule,
     NgxSpinnerModule,
     IconSetModule.forRoot(),
+    CommonModule,
+    ReactiveFormsModule,
+    ModalModule.forRoot(),
+    BsDatepickerModule.forRoot(),
+    PaginationModule.forRoot(),
+    FormsModule,
+    NgxSpinnerModule
+
   ],
   declarations: [
     AppComponent,
@@ -75,7 +94,9 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     P404Component,
     P500Component,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    IncomeComponent,
+    ExpenseComponent
   ],
   providers: [
     {

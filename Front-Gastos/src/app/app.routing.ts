@@ -8,6 +8,9 @@ import { P404Component } from './views/error/404.component';
 import { P500Component } from './views/error/500.component';
 import { LoginComponent } from './views/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
+import { IncomeComponent } from './views/income/income.component';
+import { ExpenseComponent } from './views/expense/expense.component';
+
 
 export const routes: Routes = [
   {
@@ -56,11 +59,13 @@ export const routes: Routes = [
       },
       {
         path: 'incomes',
-        loadChildren: () => import('./views/income/income.module').then(m => m.IncomeModule)
+        // loadChildren: () => import('./views/income/income.module').then(m => m.IncomeModule)
+        component: IncomeComponent
       },
       {
         path: 'expenses',
-        loadChildren: () => import('./views/expense/expense.module').then(m => m.ExpenseModule)
+        // loadChildren: () => import('./views/expense/expense.module').then(m => m.ExpenseModule)
+        component: ExpenseComponent
       },
       {
         path: 'maintance',

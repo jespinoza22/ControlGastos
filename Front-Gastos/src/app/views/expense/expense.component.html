@@ -70,31 +70,25 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let expense of listExpenses">
+                <tr *ngFor="let expense of listExpensesTemp">
                   <td style="text-align: center;">{{ expense.descriptionCategory }}</td>
                   <td>{{ expense.description }}</td>
                   <td style="text-align: center;">{{ expense.dateExpense | date:'dd/MM/yyyy' }}</td>
                   <td style="text-align: center;">{{ expense.amount | number: '1.2-2'}}</td>
                   <td>
                     <div style="text-align: center;">
-                      <a style="cursor: pointer;"><i class="fa fa-trash fa-lg"></i></a>&nbsp;
-                      <a style="cursor: pointer;"><i class="fa fa-edit fa-lg"></i></a>
+                      <a style="cursor: pointer;" (click)="deleteIncome(expense.idExpense)"><i class="fa fa-trash fa-lg"></i></a>&nbsp;
+                      <a style="cursor: pointer;" (click)="editExpense(expense)"><i class="fa fa-edit fa-lg"></i></a>
                     </div>
                   </td>
                 </tr>
               </tbody>
             </table>
             <nav>
-              <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#">Prev</a></li>
-                <li class="page-item active">
-                  <a class="page-link" href="#">1</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-              </ul>
+              <div class="col-xs-12 col-12">
+                <pagination [boundaryLinks]="true" [totalItems]="totalItems" (pageChanged)="pageChanged($event)" [(ngModel)]="currentPage" class="pagination-sm" [maxSize]="6"
+                            previousText="&lsaquo;" [itemsPerPage]="itemsPerPage" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
+              </div> 
             </nav>
           </div>
         </div>

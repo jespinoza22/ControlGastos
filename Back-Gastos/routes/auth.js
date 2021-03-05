@@ -33,7 +33,7 @@ function authApi(app) {
           };
 
           const token = jwt.sign(payload, config.apiKey, {
-            expiresIn: '30m',
+            expiresIn: '60m',
           });
 
           return res.status(200).json({ token, user });

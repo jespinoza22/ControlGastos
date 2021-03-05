@@ -7,6 +7,9 @@ import { BsDatepickerConfig, BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { esLocale } from 'ngx-bootstrap/locale';
 import { Category } from '../../models/utils';
+import { ExpenseService } from '../../services/expense.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+
 import { UtilsService } from '../../services/utils.service';
 defineLocale('es', esLocale);
 
@@ -22,17 +25,25 @@ export class ExpenseComponent implements OnInit {
   form: FormGroup;
   filter: FilterExpense = new FilterExpense();
   listExpenses: ExpenseModel[] = [];
+  listExpensesTemp: ExpenseModel[] = [];
   public bsConfigInicio: Partial<BsDatepickerConfig>;
   listCategory: Category[] = [];
+  expense :ExpenseModel =  new ExpenseModel();
+  expenseEdit :ExpenseModel =  null;
+  totalItems: number = 0;
+  currentPage: number   = 1;
+  itemsPerPage: number = 10;
 
   constructor(
     private formBuilder: FormBuilder,
     private localeService: BsLocaleService,
-    private utilService: UtilsService
+    private utilService: UtilsService,
+    private expenseService: ExpenseService,
+    private spinner: NgxSpinnerService,
   ) {
     this.localeService.use('es');
     this.titleModal = "Nuevo Gasto";
-    this.buildForm();
+    this.buildForm(false, null);
     this.initComponent();
    }
  
@@ -45,54 +56,8 @@ export class ExpenseComponent implements OnInit {
         showWeekNumbers: false,
         isAnimated: true
       });
-
-    // tempExpenses 
-    /*var objeto1 = new ExpenseModel();
-    objeto1.idExpense = 1;
-    objeto1.idCategory = 1;
-    objeto1.descriptionCategory = 'Entretenimiento';
-    objeto1.description = 'Pago Netflix';
-    objeto1.dateExpense = new Date();
-    objeto1.amount = 150.5;
-
-    var objeto2 = new ExpenseModel();
-    objeto2.idExpense = 2;
-    objeto2.idCategory = 2;
-    objeto2.descriptionCategory = 'Recibo';
-    objeto2.description = 'Pago Luz';
-    objeto2.dateExpense = new Date();
-    objeto2.amount = 172.5;
-
-    var objeto3 = new ExpenseModel();
-    objeto3.idExpense = 3;
-    objeto3.idCategory = 2;
-    objeto3.descriptionCategory = 'Recibo';
-    objeto3.description = 'Pago Agua';
-    objeto3.dateExpense = new Date();
-    objeto3.amount = 73;
-
-    var objeto4 = new ExpenseModel();
-    objeto4.idExpense = 4;
-    objeto4.idCategory = 2;
-    objeto4.descriptionCategory = 'Recibo';
-    objeto4.description = 'Pago Amazon';
-    objeto4.dateExpense = new Date();
-    objeto4.amount = 16;
-
-    var objeto5 = new ExpenseModel();
-    objeto5.idExpense = 5;
-    objeto5.idCategory = 2;
-    objeto5.descriptionCategory = 'Recibo';
-    objeto5.description = 'Pago Telefono';
-    objeto5.dateExpense = new Date();
-    objeto5.amount = 69.9;
-
-    this.listExpenses.push(objeto1);  
-    this.listExpenses.push(objeto2);  
-    this.listExpenses.push(objeto3);  
-    this.listExpenses.push(objeto4);  
-    this.listExpenses.push(objeto5);   */ 
     this.getListCategory();
+    this.findExpense();
   }
 
   initComponent() {
@@ -101,14 +66,25 @@ export class ExpenseComponent implements OnInit {
     this.filter.dateRange = [new Date(date.getFullYear(), date.getMonth(), 1), new Date(date.getFullYear(), date.getMonth() + 1, 0)];
   }
 
-  private buildForm () {
-    var dateNow = new Date();
-    this.form =  this.formBuilder.group({
-      category: ['', [Validators.required]],
-      date: [dateNow, [Validators.required]],
-      description: ['', [Validators.required]],
-      amount: ['', [Validators.required, Validators.pattern(/((\d+)((\.\d{1,2})?))$/)]]
-    });
+  private buildForm (isEdit: boolean, expense: ExpenseModel) {
+    if(!isEdit) {
+      var dateNow = new Date();
+      this.form =  this.formBuilder.group({
+        category: ['', [Validators.required]],
+        date: [dateNow, [Validators.required]],
+        description: ['', [Validators.required]],
+        amount: ['', [Validators.required, Validators.pattern(/((\d+)((\.\d{1,2})?))$/)]]
+      });
+    } else {
+      //var dateIncome = new Date(income.dateIncome.getFullYear(), income.dateIncome.getMonth(), income.dateIncome.getDate());
+      var dateExpense = new Date(expense.dateExpense);
+      this.form =  this.formBuilder.group({
+        category: [expense.idCategory, [Validators.required]],
+        date: [dateExpense, [Validators.required]],
+        description: [expense.description, [Validators.required]],
+        amount: [expense.amount, [Validators.required, Validators.pattern(/((\d+)((\.\d{1,2})?))$/)]]
+      });
+    }  
   }
 
   numbersOnly(event: any) {
@@ -123,39 +99,149 @@ export class ExpenseComponent implements OnInit {
     this.utilService.listCategories(2).subscribe((res: any) => {
       this.listCategory = res.data;
     });
-}
+  }
 
   findExpense(){
-    console.log('rango 1 =>',this.filter.dateRange[0]);
-    console.log('rango 2 =>',this.filter.dateRange[1]);
-    console.log('categoria =>',this.filter.category);
-    console.log('descripcion =>',this.filter.description);
+    this.spinner.show();
+    let dateStart = this.filter.dateRange[0];
+    dateStart = new Date(dateStart.getFullYear(), dateStart.getMonth(), dateStart.getDate());
+    let dateEnd = this.filter.dateRange[1];
+    dateEnd = new Date(dateEnd.getFullYear(), dateEnd.getMonth(), dateEnd.getDate());
+   
+   this.expenseService.listExpense({
+    nid_user: 1,
+    dateStart,
+    dateEnd,
+    id_category: this.filter.category,
+    description: typeof this.filter.description === 'undefined' ? '' : this.filter.description,
+   }).subscribe((res: any) => {
+      if (res.data != null) {
+        debugger;
+        this.listExpenses = res.data;
+        this.totalItems = this.listExpenses.length;
+        this.filterPagination();
+      }
+      this.spinner.hide();
+   });
+  }
+
+  pageChanged(event: any) {
+    this.currentPage = event.page;
+    this.filterPagination();
+  }
+
+  filterPagination() {
+    this.listExpensesTemp = [];
+    this.listExpensesTemp = this.listExpenses.filter((res: ExpenseModel, index: number) => {
+      if ( ((this.currentPage - 1) * this.itemsPerPage) <= index && index <= (this.currentPage * this.itemsPerPage) - 1) {
+        return res;
+      }
+    });
+  }  
+
+  deleteIncome(idExpense: number) {
+    Swal.fire({
+      title: '¿Estas seguro de eliminar el Gasto?',
+      showDenyButton: false,
+      showCancelButton: true,      
+      confirmButtonText: `Eliminar`,
+      confirmButtonColor: '#20a8d8',
+      cancelButtonText: 'Cancelar',
+      icon: 'info'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.expenseService.deleteExpense(idExpense).subscribe((res: any) => {
+            try {
+              if (res.data.resultado === 0) {
+                Swal.fire(
+                  'Satisfactorio',
+                  'Se elimino el Ingreso Correctamente',
+                  'success'
+                  ).then(() => 
+                    {
+                      this.findExpense();
+                    }
+                  );;
+              } else {
+                Swal.fire(
+                  '',
+                  'Hubo un error al eliminar el Ingreso',
+                  'info'
+                  )
+              }
+            } catch (error) {
+              Swal.fire(
+              '',
+              'Hubo un error al eliminar el Ingreso',
+              'info'
+              )
+            }
+        })
+      } 
+    })
+  }
+
+  newExpense() {    
+    this.titleModal = "Nuevo Gasto";
+    this.form.reset();
+    this.buildForm(false, null);
+    this.primaryModal.show();
+  }
+
+  editExpense(expense: ExpenseModel) {
+    this.titleModal = "Editar Gasto";
+    this.expenseEdit = new ExpenseModel();
+    this.expenseEdit = expense;
+    this.form.reset();
+    this.buildForm(true, expense);
+    this.primaryModal.show();
   }
 
   save() {
     if(this.form.valid){
-      console.log(this.form.value);
+      this.expense.amount = Number(this.form.get('amount').value);
+      this.expense.idCategory = Number(this.form.get('category').value);
+      this.expense.dateExpense = this.form.get('date').value;
+      const dateInput = this.expense.dateExpense;
+      this.expense.dateExpense = new Date(dateInput.getFullYear(), dateInput.getMonth(), dateInput.getDate());
+      this.expense.description = this.form.get('description').value;
+      this.expense.idCoin = 1;
+      this.expense.idUser = 1;
+      if(this.expenseEdit !== null) this.expense.idExpense = this.expenseEdit.idExpense;
+      else this.expense.idExpense = 0;
+      
+      this.expenseEdit = null;
 
-      console.log(this.form.get('amount').value);
-      if (true) {
+      this.expenseService.createExpense(this.expense).subscribe((res: any) => {
+        try {
+          if (res.data.resultado === 0) {
+            Swal.fire(
+              'Satisfactorio',
+              res.data.message,
+              'success'
+              ).then(() => 
+                {
+                  this.form.reset();
+                  this.buildForm(false, null);
+                  this.primaryModal.hide();
+                  this.findExpense();
+                }
+              );;
+          } else {
+            Swal.fire(
+              '',
+              'Hubo un error al guardar la información',
+              'info'
+              )
+          }
+        } catch (error) {
           Swal.fire(
-          'Satisfactorio',
-          'El gasto fue agregado correctamente',
-          'success'
-          ).then(() => 
-            {
-              this.form.reset();
-              this.buildForm();
-              this.primaryModal.hide();
-            }
-          );;
-      } else {
-        Swal.fire(
-          '',
-          'Hubo un error al guardar la información',
-          'info'
-          )
-      } 
+            '',
+            'Hubo un error al guardar la información',
+            'info'
+            )
+        }
+      });
     } else {
       this.form.markAllAsTouched();
     }

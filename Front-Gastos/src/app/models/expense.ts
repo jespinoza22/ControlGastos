@@ -11,4 +11,6 @@ export class ExpenseModel {
     description: string;
     dateExpense: Date;
     amount: number;
+    idCoin: number;
+    idUser: number;
 }

@@ -126,8 +126,6 @@ export class IncomeComponent implements OnInit {
   }
 
   pageChanged(event: any) {
-    // console.log('Page changed to: ' + event.page);
-    // console.log('Number items per page: ' + event.itemsPerPage);
     this.currentPage = event.page;
     this.filterPagination();
   }

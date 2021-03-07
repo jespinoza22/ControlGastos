@@ -84,11 +84,14 @@
                 </tr>
               </tbody>
             </table>
-            <nav>
-              <div class="col-xs-12 col-12">
+            <nav class="form-inline">
+              <div class="col-xs-12 col-6">
                 <pagination [boundaryLinks]="true" [totalItems]="totalItems" (pageChanged)="pageChanged($event)" [(ngModel)]="currentPage" class="pagination-sm" [maxSize]="6"
                             previousText="&lsaquo;" [itemsPerPage]="itemsPerPage" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
               </div> 
+              <div class="col-xd-12 col-6">
+                <span>Total de registros:  {{ totalItems }}&nbsp;&nbsp;&nbsp;Suma Total: {{ sumaTotal | number: '1.2-2' }}</span>                
+              </div>
             </nav>
           </div>
         </div>

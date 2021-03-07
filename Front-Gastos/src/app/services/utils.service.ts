@@ -16,4 +16,8 @@ export class UtilsService {
   login(): Observable<any> {
     return this.http.post<any>('/auth/sign-in', null);
   }
+
+  logout(): Observable<any> {
+    return this.http.get<any>('/auth/logout');
+  }
 }

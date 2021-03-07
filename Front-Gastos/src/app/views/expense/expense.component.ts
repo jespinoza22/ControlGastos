@@ -33,6 +33,8 @@ export class ExpenseComponent implements OnInit {
   totalItems: number = 0;
   currentPage: number   = 1;
   itemsPerPage: number = 10;
+  idUser: number = 0;
+  sumaTotal: number = 0;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -45,6 +47,10 @@ export class ExpenseComponent implements OnInit {
     this.titleModal = "Nuevo Gasto";
     this.buildForm(false, null);
     this.initComponent();
+    const objUser = JSON.parse(sessionStorage.getItem('User'));
+    if (objUser !== null) {
+      this.idUser = objUser.nid_user;
+    } 
    }
  
   ngOnInit(): void {    
@@ -57,7 +63,7 @@ export class ExpenseComponent implements OnInit {
         isAnimated: true
       });
     this.getListCategory();
-    this.findExpense();
+    this.findExpense();    
   }
 
   initComponent() {
@@ -109,7 +115,7 @@ export class ExpenseComponent implements OnInit {
     dateEnd = new Date(dateEnd.getFullYear(), dateEnd.getMonth(), dateEnd.getDate());
    
    this.expenseService.listExpense({
-    nid_user: 1,
+    nid_user: this.idUser,
     dateStart,
     dateEnd,
     id_category: this.filter.category,
@@ -119,6 +125,8 @@ export class ExpenseComponent implements OnInit {
         debugger;
         this.listExpenses = res.data;
         this.totalItems = this.listExpenses.length;
+        this.sumaTotal = 0.00;
+        this.listExpenses.forEach(res => this.sumaTotal += res.amount)
         this.filterPagination();
       }
       this.spinner.hide();
@@ -206,7 +214,7 @@ export class ExpenseComponent implements OnInit {
       this.expense.dateExpense = new Date(dateInput.getFullYear(), dateInput.getMonth(), dateInput.getDate());
       this.expense.description = this.form.get('description').value;
       this.expense.idCoin = 1;
-      this.expense.idUser = 1;
+      this.expense.idUser = this.idUser;
       if(this.expenseEdit !== null) this.expense.idExpense = this.expenseEdit.idExpense;
       else this.expense.idExpense = 0;
       

@@ -8,6 +8,9 @@ const { config } = require('../config/index');
 //Basic startegy
 require('../utils/auth/basic');
 
+//JWT strategy
+require('../utils/auth/jwt');
+
 function authApi(app) {
   const router = express.Router();
   app.use('/api/auth', router);
@@ -58,6 +61,22 @@ function authApi(app) {
       next(error);
     }
   });
+
+  router.get(
+    '/logout',
+    passport.authenticate('jwt', { session: false }),
+    async function (req, res, next) {
+      //const { body: user } = req;
+      req.logout();
+      try {
+        res.status(200).json({
+          status: 'Bye!',
+        });
+      } catch (error) {
+        next(error);
+      }
+    }
+  );
 }
 
 module.exports = authApi;

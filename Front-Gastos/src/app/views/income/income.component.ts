@@ -33,6 +33,8 @@ export class IncomeComponent implements OnInit {
   totalItems: number = 0;
   currentPage: number   = 1;
   itemsPerPage: number = 10;
+  idUser: number = 0;
+  sumaTotal: number = 0;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -45,6 +47,10 @@ export class IncomeComponent implements OnInit {
     this.titleModal = "Nuevo Ingreso";
     this.buildForm(false, null);
     this.initComponent();
+    const objUser = JSON.parse(sessionStorage.getItem('User'));
+    if (objUser !== null) {
+      this.idUser = objUser.nid_user;
+    }    
   }
 
   ngOnInit(): void {
@@ -110,7 +116,7 @@ export class IncomeComponent implements OnInit {
     dateEnd = new Date(dateEnd.getFullYear(), dateEnd.getMonth(), dateEnd.getDate());
    
    this.incomeService.listIncome({
-    nid_user: 1,
+    nid_user: this.idUser,
     dateStart,
     dateEnd,
     id_category: this.filter.category,
@@ -119,6 +125,8 @@ export class IncomeComponent implements OnInit {
       if (res.data != null) {
         this.listIncomes = res.data;
         this.totalItems = this.listIncomes.length;
+        this.sumaTotal = 0.00;
+        this.listIncomes.forEach(res => this.sumaTotal += res.amount)
         this.filterPagination();
       }
       this.spinner.hide();
@@ -206,7 +214,7 @@ export class IncomeComponent implements OnInit {
       this.income.dateIncome = new Date(dateInput.getFullYear(), dateInput.getMonth(), dateInput.getDate());
       this.income.description = this.form.get('description').value;
       this.income.idCoin = 1;
-      this.income.idUser = 1;
+      this.income.idUser = this.idUser;
       if(this.incomeEdit !== null) this.income.idIncome = this.incomeEdit.idIncome;
       else this.income.idIncome = 0;
       

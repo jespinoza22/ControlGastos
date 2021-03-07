@@ -19,6 +19,7 @@ passport.use(
           const objectUser = {
             idrespuesta: '',
             message: '',
+            nid_user: result.nid_user,
             suser: result.suser,
             snames: result.snames,
             slastname: result.slastname,

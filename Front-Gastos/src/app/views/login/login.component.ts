@@ -49,9 +49,10 @@ export class LoginComponent implements OnInit {
         if (res.user.idrespuesta === 0) {
           this.showErrorMessage = false;
           sessionStorage.setItem('Guard', res.token);
-          sessionStorage.setItem('User', res.user);
+          sessionStorage.setItem('User', JSON.stringify(res.user));
           sessionStorage.removeItem('basicCredentials');
           sessionStorage.removeItem('isLogin');
+          console.log(res.user, 'res.user');
           window.location.href = environment.localUrl;
 
         } else {

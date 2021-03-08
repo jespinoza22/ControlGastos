@@ -22,7 +22,6 @@ export class DefaultLayoutComponent {
   }
 
   logout(): void {
-    debugger;
     this.utilService.logout().subscribe((res : any) => {
       console.log(res);
       sessionStorage.clear();

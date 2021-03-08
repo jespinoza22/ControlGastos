@@ -7,5 +7,8 @@ export const environment = {
   production: false,
   apiUrl: 'http://localhost:3000/api',
   localUrl: 'http://localhost:4300/',
-  login: 'http://localhost:4300/#/login'
+  login: 'http://localhost:4300/#/login',
+
+  key_anho: 'KEY_ANHO',
+  key_month: 'KEY_MONTH',
 };

@@ -13,6 +13,18 @@ export class UtilsService {
     return this.http.get<any>(`/utils/listCategories/${id_category}`);
   }
 
+  listParams(key_param: string): Observable<Object[]> {
+    return this.http.get<Object[]>(`/utils/listParams/${key_param}`);
+  }
+
+  listAmountsPerYear(nidyear: number, niduser: number): Observable<Object[]>  {
+    return this.http.get<Object[]>(`/utils/listAmountsPerYear/${nidyear}/${niduser}`);
+  }
+
+  listAmountsPerMonth(niduser: number, nidyear: number, nidmonth: number): Observable<Object[]>  {
+    return this.http.get<Object[]>(`/utils/listAmountsPerMonth/${niduser}/${nidyear}/${nidmonth}`);
+  }
+
   login(): Observable<any> {
     return this.http.post<any>('/auth/sign-in', null);
   }

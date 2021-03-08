@@ -5,10 +5,6 @@ export const navItems: INavData[] = [
     name: 'Dashboard',
     url: '/dashboard',
     icon: 'icon-speedometer',
-    badge: {
-      variant: 'info',
-      text: 'NEW'
-    }
   },
   {
     name: 'Ingresos',
@@ -37,7 +33,7 @@ export const navItems: INavData[] = [
   },
   {
     name: 'Cerrar Sesión',
-    url: '/pages',
-    icon: 'cil-account-logout'
+    url: '/logout',
+    icon: 'cil-account-logout'    
   }
 ];

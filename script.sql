@@ -117,3 +117,41 @@ insert into controlgastos.tb_category (nid_income_expense, sname_type, sdecripti
 values (1, 'Prestado', 'Ingreso por dinero prestado', 'A', 0, sysdate(), 1);
 insert into controlgastos.tb_category (nid_income_expense, sname_type, sdecription, sactive, nid_user, dregister, nid_user_register)
 values (1, 'Extra', 'Ingreso por extras', 'A', 0, sysdate(), 1);
+
+insert into controlgastos.tb_parameter(skey, nid_Value, svalue, sdescription, sactive, nid_user, dregister, nid_user_register)
+values ('KEY_ANHO', 2019, '2019', 'Valor de Año', 'A', 0, sysdate(), 1);
+insert into controlgastos.tb_parameter(skey, nid_Value, svalue, sdescription, sactive, nid_user, dregister, nid_user_register)
+values ('KEY_ANHO', 2020, '2020', 'Valor de Año', 'A', 0, sysdate(), 1);
+insert into controlgastos.tb_parameter(skey, nid_Value, svalue, sdescription, sactive, nid_user, dregister, nid_user_register)
+values ('KEY_ANHO', 2021, '2021', 'Valor de Año', 'A', 0, sysdate(), 1);
+insert into controlgastos.tb_parameter(skey, nid_Value, svalue, sdescription, sactive, nid_user, dregister, nid_user_register)
+values ('KEY_ANHO', 2022, '2022', 'Valor de Año', 'A', 0, sysdate(), 1);
+insert into controlgastos.tb_parameter(skey, nid_Value, svalue, sdescription, sactive, nid_user, dregister, nid_user_register)
+values ('KEY_ANHO', 2023, '2023', 'Valor de Año', 'A', 0, sysdate(), 1);
+
+
+insert into controlgastos.tb_parameter(skey, nid_Value, svalue, sdescription, sactive, nid_user, dregister, nid_user_register)
+values ('KEY_MONTH', 01, 'Enero', 'Valor del mes', 'A', 0, sysdate(), 1);
+insert into controlgastos.tb_parameter(skey, nid_Value, svalue, sdescription, sactive, nid_user, dregister, nid_user_register)
+values ('KEY_MONTH', 02, 'Febrero', 'Valor del mes', 'A', 0, sysdate(), 1);
+insert into controlgastos.tb_parameter(skey, nid_Value, svalue, sdescription, sactive, nid_user, dregister, nid_user_register)
+values ('KEY_MONTH', 03, 'Marzo', 'Valor del mes', 'A', 0, sysdate(), 1);
+insert into controlgastos.tb_parameter(skey, nid_Value, svalue, sdescription, sactive, nid_user, dregister, nid_user_register)
+values ('KEY_MONTH', 04, 'Abril', 'Valor del mes', 'A', 0, sysdate(), 1);
+insert into controlgastos.tb_parameter(skey, nid_Value, svalue, sdescription, sactive, nid_user, dregister, nid_user_register)
+values ('KEY_MONTH', 05, 'Mayo', 'Valor del mes', 'A', 0, sysdate(), 1);
+insert into controlgastos.tb_parameter(skey, nid_Value, svalue, sdescription, sactive, nid_user, dregister, nid_user_register)
+values ('KEY_MONTH', 06, 'Junio', 'Valor del mes', 'A', 0, sysdate(), 1);
+insert into controlgastos.tb_parameter(skey, nid_Value, svalue, sdescription, sactive, nid_user, dregister, nid_user_register)
+values ('KEY_MONTH', 07, 'Julio', 'Valor del mes', 'A', 0, sysdate(), 1);
+insert into controlgastos.tb_parameter(skey, nid_Value, svalue, sdescription, sactive, nid_user, dregister, nid_user_register)
+values ('KEY_MONTH', 08, 'Agosto', 'Valor del mes', 'A', 0, sysdate(), 1);
+insert into controlgastos.tb_parameter(skey, nid_Value, svalue, sdescription, sactive, nid_user, dregister, nid_user_register)
+values ('KEY_MONTH', 09, 'Setiembre', 'Valor del mes', 'A', 0, sysdate(), 1);
+insert into controlgastos.tb_parameter(skey, nid_Value, svalue, sdescription, sactive, nid_user, dregister, nid_user_register)
+values ('KEY_MONTH', 10, 'Octubre', 'Valor del mes', 'A', 0, sysdate(), 1);
+insert into controlgastos.tb_parameter(skey, nid_Value, svalue, sdescription, sactive, nid_user, dregister, nid_user_register)
+values ('KEY_MONTH', 11, 'Noviembre', 'Valor del mes', 'A', 0, sysdate(), 1);
+insert into controlgastos.tb_parameter(skey, nid_Value, svalue, sdescription, sactive, nid_user, dregister, nid_user_register)
+values ('KEY_MONTH', 12, 'Diciembre', 'Valor del mes', 'A', 0, sysdate(), 1);
+

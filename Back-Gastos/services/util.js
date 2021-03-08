@@ -21,6 +21,20 @@ class UtilService {
       return callback(res);
     });
   }
+
+  async listAmountsPerYear(id_year, id_user, callback) {
+    var query = `CALL sps_listamounts_year(${id_year}, ${id_user})`;
+    await this.mysqlDB.callProcedure(query, (res) => {
+      return callback(res);
+    });
+  }
+
+  async listAmountsPerMonth(id_user, id_year, id_month, callback) {
+    var query = `CALL sps_listamounts_month(${id_user}, ${id_year}, ${id_month})`;
+    await this.mysqlDB.callProcedure(query, (res) => {
+      return callback(res);
+    });
+  }
 }
 
 module.exports = UtilService;

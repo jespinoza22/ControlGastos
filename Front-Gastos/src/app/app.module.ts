@@ -53,11 +53,13 @@ import { AppRoutingModule } from './app.routing';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { IncomeComponent } from './views/income/income.component';
 import { ExpenseComponent } from './views/expense/expense.component';
-
+import { DashboardComponent } from './views/dashboard/dashboard.component';
+import { LogoutComponent } from './views/logout/logout.component';
 
 @NgModule({
   imports: [
@@ -84,6 +86,7 @@ import { ExpenseComponent } from './views/expense/expense.component';
     ModalModule.forRoot(),
     BsDatepickerModule.forRoot(),
     PaginationModule.forRoot(),
+    CollapseModule.forRoot(),
     FormsModule,
     NgxSpinnerModule
 
@@ -96,7 +99,9 @@ import { ExpenseComponent } from './views/expense/expense.component';
     LoginComponent,
     RegisterComponent,
     IncomeComponent,
-    ExpenseComponent
+    ExpenseComponent,
+    DashboardComponent,
+    LogoutComponent
   ],
   providers: [
     {

@@ -31,6 +31,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    debugger;
     const user = this.form.get('username').value;
     const password = this.form.get('password').value;
     debugger;

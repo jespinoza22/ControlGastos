@@ -10,11 +10,15 @@ import { environment } from '../../../environments/environment';
 export class DefaultLayoutComponent {
   public sidebarMinimized = false;
   public navItems = navItems;
+  nameUser: string;
 
   constructor(
     private utilService:  UtilsService
   ) {
-
+    const objUser = JSON.parse(sessionStorage.getItem('User'));
+    if (objUser !== null) {
+      this.nameUser = `${objUser.snames} ${objUser.slastname}` 
+    }   
   }
 
   toggleMinimize(e) {

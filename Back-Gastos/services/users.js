@@ -13,7 +13,7 @@ class UserService {
                 '${user.slastname2}', '${user.semail}', '${user.sphone}', '${user.saddress}', ${user.nid_user_register})`;
 
     await this.mysqlDB.callProcedure(query, (res) => {
-      callback(res);
+      callback(res[0]);
     });
   }
 

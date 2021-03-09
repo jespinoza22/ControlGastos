@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { UserRegisterModel } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,10 @@ export class UtilsService {
 
   login(): Observable<any> {
     return this.http.post<any>('/auth/sign-in', null);
+  }
+
+  register(model: UserRegisterModel): Observable<any> {
+    return this.http.post<any>('/auth/sign-up', model);
   }
 
   logout(): Observable<any> {

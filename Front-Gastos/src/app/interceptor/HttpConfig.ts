@@ -12,7 +12,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
     ) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        debugger;
+        //debugger;
         const isLogin: string = sessionStorage.getItem('isLogin');
         if (isLogin === '1') {
             const credentials: string  = sessionStorage.getItem('basicCredentials');

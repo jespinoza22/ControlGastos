@@ -5,7 +5,8 @@ import { AmountMonthModel, AmountsModel } from '../../models/utils';
 
 @Component({
   selector: 'app-dashboard',
-  templateUrl: 'dashboard.component.html'
+  templateUrl: 'dashboard.component.html',
+  styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
   
@@ -66,6 +67,7 @@ export class DashboardComponent implements OnInit {
   // barChart
   public barChartOptions: any = {
     scaleShowVerticalLines: false,
+    maintainAspectRatio: false,
     responsive: true
   };
   public barChartLabels: string[] = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Setiembre', 'Octubre', 'Noviembre', 'Diciembre'];
@@ -94,7 +96,6 @@ export class DashboardComponent implements OnInit {
       this.arrayAmountIncome = [];
       this.sumExpenses = 0;
       this.sumIncomes = 0;
-      debugger;
       this.nameMonth = this.nmonth === 0 ? this.nyear.toString() : this.listMonths.find(res => res.nid_value == this.nmonth).svalue;
       this.listArraysAmounts.forEach(res => {
         this.arrayAmountIncome.push(res.amount_income);

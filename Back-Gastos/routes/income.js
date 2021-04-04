@@ -1,13 +1,14 @@
 const express = require('express');
 const passport = require('passport');
 const IncomeService = require('../services/income');
+const { params } = require('../utils/params');
 
 //JWT strategy
 require('../utils/auth/jwt');
 
 function incomeApi(app) {
   const router = express.Router();
-  app.use('/api/income', router);
+  app.use(`${params.urlAPi}api/income`, router);
   const incomeService = new IncomeService();
 
   router.post(

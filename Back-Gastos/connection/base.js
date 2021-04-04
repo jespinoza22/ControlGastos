@@ -6,6 +6,9 @@ var configMySql = mysql.createConnection({
   database: 'ControlGastos',
   user: 'root',
   password: 'root',
+  // database: 'jespukdk_ControlGastos',
+  // user: 'jespukdk_root',
+  // password: 'rootDataBase'
 });
 
 class mysqlLib {

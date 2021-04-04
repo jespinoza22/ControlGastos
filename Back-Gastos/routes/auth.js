@@ -4,6 +4,7 @@ const boom = require('@hapi/boom');
 const jwt = require('jsonwebtoken');
 const UserService = require('../services/users');
 const { config } = require('../config/index');
+const { params } = require('../utils/params');
 
 //Basic startegy
 require('../utils/auth/basic');
@@ -13,7 +14,7 @@ require('../utils/auth/jwt');
 
 function authApi(app) {
   const router = express.Router();
-  app.use('/api/auth', router);
+  app.use(`${params.urlAPi}api/auth`, router);
   const userService = new UserService();
 
   router.post('/sign-in', async function (req, res, next) {

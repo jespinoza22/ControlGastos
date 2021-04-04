@@ -20,12 +20,11 @@ app.use(express.json());
 authApi(app);
 utilsApi(app);
 incomeApi(app); // Cors for some domains
-expenseApi(app); // app.get('/', function (req, res) {
+expenseApi(app); // app.get('/', function (req, res) { //   res.send('Hello world');
 /*
 const corsOptions = { origin: "http://example.com" };
 
-app.use(cors(corsOptions));*/ //   res.send('Hello world');
-// });
+app.use(cors(corsOptions));*/ // });
 
 // app.get('/json', function (req, res) {
 //   res.json({ hello: 'world' });

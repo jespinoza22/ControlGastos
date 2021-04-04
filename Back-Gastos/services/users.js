@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const mysqlLib = require('../connection/base');
+const logger = require('../utils/log/logger');
 
 class UserService {
   constructor() {
@@ -19,7 +20,6 @@ class UserService {
 
   async getuser(user, callback) {
     var query = `CALL sps_login('${user}')`;
-
     await this.mysqlDB.callProcedure(query, (res) => {
       return callback(res[0]);
     });

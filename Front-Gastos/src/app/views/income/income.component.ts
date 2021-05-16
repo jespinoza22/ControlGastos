@@ -70,7 +70,7 @@ export class IncomeComponent implements OnInit {
   initComponent() {
     this.filter.category = 0;
     var date = new Date();
-    this.filter.dateRange = [new Date(date.getFullYear(), date.getMonth(), 1), new Date(date.getFullYear(), date.getMonth() + 1, 0)];
+    this.filter.dateRange = [new Date(date.getFullYear(), date.getMonth(), 1), new Date(date.getFullYear(), date.getMonth(), 0)];
   }
 
   private buildForm (isEdit: boolean, income: IncomeModel) {

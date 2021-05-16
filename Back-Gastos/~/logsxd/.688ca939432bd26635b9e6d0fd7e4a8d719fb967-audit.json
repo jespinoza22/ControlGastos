@@ -6,14 +6,19 @@
   "auditLog": "~\\logsxd\\.688ca939432bd26635b9e6d0fd7e4a8d719fb967-audit.json",
   "files": [
     {
-      "date": 1617395305089,
-      "name": "~\\logsxd\\application-2021-04-02.log",
-      "hash": "06fcbc1780d586abacd06d497c6fbe74"
+      "date": 1619133108371,
+      "name": "~\\logsxd\\application-2021-04-22.log",
+      "hash": "956fd4e0bcf77beed6cc045a40fde6d2"
     },
     {
-      "date": 1617491190546,
-      "name": "~\\logsxd\\application-2021-04-03.log",
-      "hash": "117f2163744f30a8ab29a553bac209bf"
+      "date": 1619577735499,
+      "name": "~\\logsxd\\application-2021-04-27.log",
+      "hash": "b8206061fc23b441790d1e5386054097"
+    },
+    {
+      "date": 1619705305933,
+      "name": "~\\logsxd\\application-2021-04-29.log",
+      "hash": "f13643a4fd22deeda3937aa37ab7de55"
     }
   ]
 }
